@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:soccer_news/controller/get_data.dart';
 import 'package:soccer_news/view/screens/home_view.dart';
 
+import 'controller/change index cubit/change_index_cubit.dart';
+import 'controller/soccer cubit/soccer_cubit.dart';
 
-void main() {
-  GetDataController controller = Get.put(GetDataController());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -21,10 +22,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  GetMaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
-      home: HomeView()
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<SoccerCubit>(
+            create: (context) => SoccerCubit()
+              ..getSoccerArData
+              ..getSoccerEnData,
+          ),
+          BlocProvider<ChangeIndexCubit>(
+            create: (context) => ChangeIndexCubit(),
+          )
+        ],
+        child: HomeView(),
+      ),
     );
   }
 }

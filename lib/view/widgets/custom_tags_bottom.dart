@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'my_tags.dart';
 
 class CustomTagsBottom extends StatelessWidget {
@@ -17,16 +16,20 @@ class CustomTagsBottom extends StatelessWidget {
     ];
 
     return SizedBox(
-      width: Get.width,
+      width:  MediaQuery.of(context).size.width,
       height: 80,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: tagImgs.length,
         itemBuilder: (context, i) {
-          return MyTags(
-            tagImgs: tagImgs,
-            i: i,
-            isTopTags: false,
+          return Padding(
+            padding:  i == 0 ? const EdgeInsets.only(left: 5) : const EdgeInsets.only(left: 0),
+            child: MyTags(
+              
+              tagImgs: tagImgs,
+              i: i,
+              isTopTags: false,
+            ),
           );
         },
       ),

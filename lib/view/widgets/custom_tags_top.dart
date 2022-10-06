@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 
 import 'my_tags.dart';
 
@@ -19,15 +17,19 @@ class _CustomTagsState extends State<CustomTagsTop> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: Get.width,
+      width:  MediaQuery.of(context).size.width,
       height: 55,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: tagText.length,
         itemBuilder: (context, i) {
-          return MyTags(
-            tagText: tagText,
-            i: i,
+          return Padding(
+            padding:
+                i == 0 ? const EdgeInsets.only(left: 5) : const EdgeInsets.only(left: 0),
+            child: MyTags(
+              tagText: tagText,
+              i: i,
+            ),
           );
         },
       ),

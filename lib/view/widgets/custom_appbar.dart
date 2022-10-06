@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:soccer_news/const/colors.dart';
-import 'package:soccer_news/view/widgets/custom_text.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({Key? key}) : super(key: key);
@@ -14,13 +13,19 @@ class CustomAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Icon(Icons.search, color: Colors.white, size: 30),
-          CustomText(text: 'Soccer News', fontSize: 25),
+          Text(
+            'Sport News',
+            style: GoogleFonts.bebasNeue(
+              fontSize: 30,
+              color: Colors.blue.shade100,
+            ),
+          ),
           Container(
             alignment: Alignment.center,
             width: 45,
             height: 45,
             decoration: BoxDecoration(
-                color: MyColors.blue,
+                color: MyConst.blue,
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.blue.shade900, width: 2)),
             child: Image.asset(

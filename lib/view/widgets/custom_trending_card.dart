@@ -1,6 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
 import 'package:soccer_news/const/colors.dart';
 import 'package:soccer_news/model/soccer_model.dart';
 import '../screens/details_view.dart';
@@ -25,22 +25,25 @@ class CustomTrendingCard extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
-              onTap: (() => Get.to(
-                    () => DetailsView(
-                      img: soccer[i].imageUrl.toString(),
-                      title: soccer[i].title.toString(),
-                      i: soccer[i],
-                      description: soccer[i].description.toString(),
+              onTap: (() => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsView(
+                        img: soccer[i].imageUrl.toString(),
+                        title: soccer[i].title.toString(),
+                        i: soccer[i],
+                        description: soccer[i].description.toString(),
+                      ),
                     ),
                   )),
               child: Container(
-                width: Get.width - 120,
+                width: MediaQuery.of(context).size.width - 120,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: MyColors.liteBlue,
+                    color: MyConst.liteBlue,
                     width: 2,
                   ),
-                  color: MyColors.blue,
+                  color: MyConst.blue,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
@@ -48,28 +51,50 @@ class CustomTrendingCard extends StatelessWidget {
                     //img
                     Hero(
                       tag: soccer[i],
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(8),
-                          topRight: Radius.circular(8),
+                      child: CachedNetworkImage(
+                        errorWidget: (context, url, error) => ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                          child: SizedBox(
+                            width:  MediaQuery.of(context).size.width,
+                            height: 180,
+                            child: Image.asset(
+                              'lib/assets/images/default.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                        child: Container(
-                          width: Get.width,
-                          height: 180,
-                          decoration: BoxDecoration(
-                            image: soccer[i].imageUrl == null
-                                ? const DecorationImage(
-                                    image: AssetImage(
-                                      'lib/assets/images/default.png',
-                                    ),
-                                    fit: BoxFit.cover,
-                                  )
-                                : DecorationImage(
-                                    image: NetworkImage(
-                                      soccer[i].imageUrl.toString(),
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
+                        placeholder: ((context, url) => ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(8),
+                                topRight: Radius.circular(8),
+                              ),
+                              child: SizedBox(
+                                width:  MediaQuery.of(context).size.width,
+                                height: 180,
+                                child: Image.asset(
+                                  'lib/assets/images/default.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )),
+                        imageUrl: soccer[i].imageUrl.toString(),
+                        imageBuilder: (context, imageProvider) => ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8),
+                          ),
+                          child: Container(
+                            width:  MediaQuery.of(context).size.width,
+                            height: 180,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -83,7 +108,7 @@ class CustomTrendingCard extends StatelessWidget {
                           //title
                           CustomText(
                             text: soccer[i].title.toString(),
-                            fontSize: 15,
+                            fontSize: 14,
                           ),
                           const SizedBox(height: 10),
                           //content
@@ -92,7 +117,7 @@ class CustomTrendingCard extends StatelessWidget {
                             text: soccer[i].description.toString(),
                             fontSize: 12,
                           ),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -100,7 +125,7 @@ class CustomTrendingCard extends StatelessWidget {
                               Row(
                                 children: [
                                   CustomText(
-                                    fontSize: 13,
+                                    fontSize: 10,
                                     text: 'sports',
                                   ),
                                   const SizedBox(width: 5),
@@ -115,13 +140,13 @@ class CustomTrendingCard extends StatelessWidget {
                               Row(
                                 children: [
                                   FaIcon(FontAwesomeIcons.heart,
-                                      color: Colors.grey.shade500, size: 20),
+                                      color: Colors.grey.shade500, size: 18),
                                   const SizedBox(width: 8),
                                   FaIcon(FontAwesomeIcons.comment,
-                                      color: Colors.grey.shade500, size: 20),
+                                      color: Colors.grey.shade500, size: 18),
                                   const SizedBox(width: 8),
                                   FaIcon(FontAwesomeIcons.shareNodes,
-                                      color: Colors.grey.shade500, size: 20),
+                                      color: Colors.grey.shade500, size: 18),
                                 ],
                               )
                             ],
