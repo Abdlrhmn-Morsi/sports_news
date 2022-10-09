@@ -1,5 +1,7 @@
 # soccer_news
 
+![sports news app](app_github_cover.png)
+
 A new Flutter project.
 
 ## Getting Started
