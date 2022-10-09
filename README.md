@@ -1,4 +1,4 @@
-# soccer_news
+# soccer news
 
 ![sports news app](app_github_cover.png)
 
